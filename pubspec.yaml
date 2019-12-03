@@ -1,0 +1,55 @@
+name: flutter_wanandroid_redux
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  redux: ^3.0.0
+  flutter_redux: ^0.5.4
+  redux_thunk: ^0.2.1
+  dio: ^3.0.7
+  alice: ^0.0.17
+  fluttertoast: ^3.1.3
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/image01.jpg
+    - assets/images/image02.jpg
+    - assets/images/image03.jpg
+    - assets/images/image04.jpg
+    - assets/images/image05.jpg
+    - assets/images/image06.jpg
+    - assets/images/image07.jpg
+    - assets/images/image08.jpg
+    - assets/images/image09.jpg
+    - assets/images/image10.jpg
+    - assets/images/image11.jpg
+    - assets/images/image12.jpg
+  fonts:
+    - family: Source Code Pro
+      fonts:
+        - asset: assets/fonts/SourceCodePro-Regular.ttf
+        - asset: assets/fonts/SourceCodePro-Italic.ttf
+          style: italic
+
+    - family: Lora
+      fonts:
+        - asset: assets/fonts/Lora-Regular.ttf
+        - asset: assets/fonts/Lora-Italic.ttf
+          style: italic
+
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/Pacifico-Regular.ttf

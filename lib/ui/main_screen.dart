@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/ui/hoem_screen.dart';
+import 'package:flutter_wanandroid_redux/ui/test_screen.dart';
 import 'package:flutter_wanandroid_redux/widget/home_bottom_bar.dart';
 
 class MainScreen extends StatefulWidget {
@@ -46,8 +47,8 @@ class _MainScreenState extends State<MainScreen>
         physics: const NeverScrollableScrollPhysics(),
         children: <Widget>[
           HomeScreen(titleText: "Home"),
-          HomeScreen(titleText: "Project"),
-          HomeScreen(titleText: "Setting"),
+          TestScreen(titleText: "Project"),
+          TestScreen(titleText: "Setting"),
         ],
       ),
     );
@@ -61,6 +62,7 @@ class _MainScreenState extends State<MainScreen>
           _getTitleText(),
           style: TextStyle(
             fontSize: 22.0,
+            fontFamily: "Source Code Pro",
             fontWeight: FontWeight.bold,
           ),
         ),

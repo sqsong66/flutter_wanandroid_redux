@@ -8,7 +8,7 @@ void showLoadingDialog(BuildContext context, String loadingText) {
         return SimpleDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          backgroundColor: Color(0xAA000000),
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0.0,
           children: <Widget>[
             Column(
@@ -17,8 +17,7 @@ void showLoadingDialog(BuildContext context, String loadingText) {
                   height: 20.0,
                 ),
                 CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
                 SizedBox(
                   height: 30.0,

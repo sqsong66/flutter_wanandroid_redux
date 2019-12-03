@@ -15,7 +15,7 @@ class RoundedButtonWidget extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
-        color: Colors.teal,
+        color: Theme.of(context).accentColor,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         disabledColor: Colors.grey[400],

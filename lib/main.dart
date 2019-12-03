@@ -10,7 +10,6 @@ void main() => runApp(WanAndroidApp(createStore()));
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class WanAndroidApp extends StatefulWidget {
-
   final Store<AppState> store;
   WanAndroidApp(this.store);
 
@@ -19,18 +18,17 @@ class WanAndroidApp extends StatefulWidget {
 }
 
 class _WanAndroidAppState extends State<WanAndroidApp> {
-
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
-      store: widget.store, 
+      store: widget.store,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         title: 'Wan Android',
-        theme: ThemeData(
-          primarySwatch: Colors.teal,
-          fontFamily: "Source Code Pro",
+        theme: ThemeData.dark().copyWith(
+          textTheme:
+              ThemeData.dark().textTheme.apply(fontFamily: "Source Code Pro"),
         ),
         home: SplashScreen(),
       ),

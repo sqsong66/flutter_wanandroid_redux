@@ -41,16 +41,29 @@ class _MainScreenState extends State<MainScreen>
   }
 
   Widget _buildContent() {
-    return Expanded(
-      child: TabBarView(
-        controller: _tabController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: <Widget>[
-          HomeScreen(titleText: "Home"),
-          TestScreen(titleText: "Project"),
-          TestScreen(titleText: "Setting"),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              HomeScreen(titleText: "Home"),
+              TestScreen(titleText: "Project"),
+              TestScreen(titleText: "Setting"),
+            ],
+          ),
+        ),
+        HomeBottomBar(
+          selectedTab: _selectedTab,
+          onTabChanged: (selectedTab) {
+            setState(() {
+              _selectedTab = selectedTab;
+              _tabController.index = _selectedTab;
+            });
+          },
+        )
+      ],
     );
   }
 
@@ -67,20 +80,7 @@ class _MainScreenState extends State<MainScreen>
           ),
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          _buildContent(),
-          HomeBottomBar(
-            selectedTab: _selectedTab,
-            onTabChanged: (selectedTab) {
-              setState(() {
-                _selectedTab = selectedTab;
-                _tabController.index = _selectedTab;
-              });
-            },
-          )
-        ],
-      ),
+      body: _buildContent(),
     );
   }
 }

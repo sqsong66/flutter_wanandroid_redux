@@ -1,5 +1,6 @@
 import 'package:alice/alice.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_wanandroid_redux/data/banner_data.dart';
 import 'package:flutter_wanandroid_redux/data/login_result.dart';
 import 'package:flutter_wanandroid_redux/main.dart';
 import 'package:flutter_wanandroid_redux/network/url_constants.dart';
@@ -29,5 +30,14 @@ class WanAndroidApi {
     print("Request result: ${response.data.toString()}");
     LoginResult result = LoginResult.fromJson(response.data);
     return result;
+  }
+
+  Future<List<BannerData>> getBannerList() async {
+    Response response = await _dio.get(bannerUrl);
+    BannerBean bean = BannerBean.fromJson(response.data);
+    if (bean.errorCode == 0 && bean.data != null && bean.data.isNotEmpty) {
+      return bean.data;
+    }
+    return null;
   }
 }

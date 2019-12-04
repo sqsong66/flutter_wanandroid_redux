@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/data/banner_data.dart';
 import 'package:flutter_wanandroid_redux/widget/banner_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String titleText;
 
   HomeScreen({this.titleText});
 
   @override
-  Widget build(BuildContext context) {
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
     List<BannerData> bannerList = [
       BannerData(imagePath: "assets/images/image01.jpg"),
       BannerData(imagePath: "assets/images/image02.jpg"),
@@ -18,8 +23,11 @@ class HomeScreen extends StatelessWidget {
     ];
     return Column(
       children: <Widget>[
-        BannerWidget(imageLists: bannerList,)
+        BannerWidget(bannerLists: bannerList,)
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

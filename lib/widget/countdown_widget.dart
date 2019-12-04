@@ -31,7 +31,7 @@ class _CountdownWidgetState extends State<CountdownWidget> {
       Duration(seconds: 1),
       (timer) {
         print('Timer tick: ${timer.tick}');
-        if (timer.tick > 3) {
+        if (timer.tick == 3) {
           widget.onCountdownTap();
         }
       },

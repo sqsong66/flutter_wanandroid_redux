@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/data/datas.dart';
-import 'package:flutter_wanandroid_redux/ui/login_screen.dart';
+import 'package:flutter_wanandroid_redux/ui/main_screen.dart';
 import 'package:flutter_wanandroid_redux/widget/countdown_widget.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -32,7 +32,7 @@ class SplashScreen extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(), // MainScreen(),
+                      builder: (context) => MainScreen(), // MainScreen(),
                     ),
                   );
                 },

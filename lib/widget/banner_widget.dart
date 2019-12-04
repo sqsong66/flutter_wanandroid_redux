@@ -9,7 +9,7 @@ const TOTAL_PAGES = 100000;
 class BannerWidget extends StatefulWidget {
   final List<BannerData> bannerLists;
 
-  BannerWidget({this.bannerLists});
+  BannerWidget({@required this.bannerLists});
 
   @override
   _BannerWidgetState createState() => _BannerWidgetState();

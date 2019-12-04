@@ -1,11 +1,28 @@
-import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
+import 'package:flutter_wanandroid_redux/data/banner_data.dart';
+import 'package:flutter_wanandroid_redux/network/wan_android_api.dart';
+import 'package:redux/redux.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
-class UpdateHomeBannerAction {
-  UpdateHomeBannerAction();
+ThunkAction refreshBannerData() {
+  return (Store store) async {
+    List<BannerData> bannerList = await WanAndroidApi().getBannerList();
+    if (bannerList == null) {
+      bannerList = [];
+    }
+    store.dispatch(HomeBannerUpdated(bannerList: bannerList));
+  };
 }
 
-class UpdateHomeArticleAction {
-  final List<HomeArticle> articleLists;
+class RefreshHomeBannerAction {
+  RefreshHomeBannerAction();
+}
+
+class HomeBannerUpdated {
+  final List<BannerData> bannerList;
+  HomeBannerUpdated({this.bannerList});
+}
+
+class RefreshHomeArticleAction {
   final int currentPage;
-  UpdateHomeArticleAction({this.articleLists, this.currentPage});
+  RefreshHomeArticleAction({this.currentPage});
 }

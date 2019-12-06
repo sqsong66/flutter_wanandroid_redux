@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 import 'package:flutter_wanandroid_redux/model/home_view_model.dart';
 import 'package:flutter_wanandroid_redux/redux/actions/home_action.dart';
 import 'package:flutter_wanandroid_redux/redux/state/app_state.dart';
 import 'package:flutter_wanandroid_redux/widget/banner_widget.dart';
+import 'package:flutter_wanandroid_redux/widget/home_article_widget.dart';
+import 'package:flutter_wanandroid_redux/widget/home_refresh_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   final String titleText;
@@ -19,25 +22,29 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    // List<BannerData> bannerList = [
-    //   BannerData(imagePath: "assets/images/image01.jpg"),
-    //   BannerData(imagePath: "assets/images/image02.jpg"),
-    //   BannerData(imagePath: "assets/images/image03.jpg"),
-    //   BannerData(imagePath: "assets/images/image04.jpg"),
-    // ];
-    // return Column(
-    //   children: <Widget>[
-    //     BannerWidget(bannerLists: bannerList,)
-    //   ],
-    // );
     return StoreConnector<AppState, HomeViewModel>(
-        onInit: (store) => store.dispatch(refreshBannerData),
+        onInit: (store) {
+          store.dispatch(refreshBannerData(context));
+          store.dispatch(loadHomeArticle());
+        },
         converter: (store) => HomeViewModel.fromStore(store),
         builder: (context, viewModel) {
-          return Column(
-            children: <Widget>[
-              BannerWidget(bannerLists: viewModel.bannerList),
-            ],
+          return HomeRefreshWidget<HomeArticle>(
+            isLoading: viewModel.isLoading,
+            hasMoreData: viewModel.hasMoreData,
+            dataList: viewModel.articleList,
+            headerWidget: BannerWidget(
+              bannerLists: viewModel.bannerList,
+              bannerHeight: viewModel.bannerHeight,
+            ),
+            refreshData: () async {
+              viewModel.refreshEvents(context);
+              return Future.delayed(Duration(milliseconds: 1500));
+            },
+            onLoadMore: () {},
+            buildItem: (BuildContext context, HomeArticle data, int index) {
+              return HomeArticleWidget(article: data);
+            },
           );
         });
   }

@@ -1,6 +1,7 @@
 import 'package:alice/alice.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_wanandroid_redux/data/banner_data.dart';
+import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 import 'package:flutter_wanandroid_redux/data/login_result.dart';
 import 'package:flutter_wanandroid_redux/main.dart';
 import 'package:flutter_wanandroid_redux/network/url_constants.dart';
@@ -39,5 +40,10 @@ class WanAndroidApi {
       return bean.data;
     }
     return null;
+  }
+
+  Future<HomeArticleBean> getHomeArticles(int page) async {
+    Response response = await _dio.get("/article/list/$page/json");
+    return HomeArticleBean.fromJson(response.data);
   }
 }

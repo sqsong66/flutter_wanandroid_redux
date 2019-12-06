@@ -8,7 +8,7 @@ void showLoadingDialog(BuildContext context, String loadingText) {
         return SimpleDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          backgroundColor: Theme.of(context).cardColor,
+          backgroundColor: Theme.of(context).dialogBackgroundColor,
           elevation: 0.0,
           children: <Widget>[
             Column(

@@ -7,30 +7,37 @@ import 'package:preload_page_view/preload_page_view.dart';
 const TOTAL_PAGES = 100000;
 
 class BannerWidget extends StatefulWidget {
+  final double bannerHeight;
   final List<BannerData> bannerLists;
 
-  BannerWidget({@required this.bannerLists});
+  BannerWidget({@required this.bannerLists, this.bannerHeight});
 
   @override
   _BannerWidgetState createState() => _BannerWidgetState();
 }
 
-class _BannerWidgetState extends State<BannerWidget> {
+class _BannerWidgetState extends State<BannerWidget> with AutomaticKeepAliveClientMixin<BannerWidget> {
   Timer _timer;
   int _currentIndex = 0;
-  double _bannerHeight = 200.0;
   PreloadPageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    double initPage =
-        TOTAL_PAGES / 2 - (TOTAL_PAGES / 2) % widget.bannerLists.length;
-    _pageController = PreloadPageController(initialPage: initPage.toInt());
-    initTimer();
   }
 
-  void initTimer() {
+  void _initController() {
+    if (_pageController == null &&
+        widget.bannerLists != null &&
+        widget.bannerLists.isNotEmpty) {
+      double initPage =
+          TOTAL_PAGES / 2 - (TOTAL_PAGES / 2) % widget.bannerLists.length;
+      _pageController = PreloadPageController(initialPage: initPage.toInt());
+      _initTimer();
+    }
+  }
+
+  void _initTimer() {
     stopTimer();
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
       int newPage = _pageController.page.toInt() + 1;
@@ -39,8 +46,8 @@ class _BannerWidgetState extends State<BannerWidget> {
       }
       _pageController.animateToPage(
         newPage,
-        curve: Curves.linear,
-        duration: Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+        duration: Duration(milliseconds: 300),
       );
     });
   }
@@ -53,7 +60,7 @@ class _BannerWidgetState extends State<BannerWidget> {
   @override
   void dispose() {
     super.dispose();
-    _pageController.dispose();
+    _pageController?.dispose();
     stopTimer();
   }
 
@@ -82,7 +89,7 @@ class _BannerWidgetState extends State<BannerWidget> {
       },
       itemBuilder: (BuildContext context, int index) {
         return Container(
-          margin: EdgeInsets.all(10.0),
+          margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 16.0),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
@@ -90,9 +97,9 @@ class _BannerWidgetState extends State<BannerWidget> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: Image(
-                  image: AssetImage(widget
+                  image: NetworkImage(widget
                       .bannerLists[index % widget.bannerLists.length]
-                      .imagePath), // NetworkImage(widget.imageLists[index].imagePath),
+                      .imagePath),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -117,15 +124,29 @@ class _BannerWidgetState extends State<BannerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+    _initController();
     return Container(
-      height: _bannerHeight,
+      height: (widget.bannerHeight == 0) ? 220.0 : widget.bannerHeight,
       width: double.infinity,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: const Color(0x33000000),
+              blurRadius: 3.0,
+              spreadRadius: 0.5,
+              offset: Offset(3.0, 3.0),
+            ),
+          ]),
       child: (widget.bannerLists == null || widget.bannerLists.length == 0)
           ? _placeHolder()
           : _bannerWidget(),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class Indicator extends StatelessWidget {

@@ -11,6 +11,7 @@ enum LoadingStatus {
 
 @immutable
 class HomeState {
+  final int currentPage;
   final bool isLoading;
   final bool hasMoreData;
   final LoadingStatus status;
@@ -19,7 +20,8 @@ class HomeState {
   final List<HomeArticle> articleList;
 
   HomeState(
-      {@required this.isLoading,
+      {@required this.currentPage,
+      @required this.isLoading,
       @required this.hasMoreData,
       @required this.status,
       @required this.bannerHeight,
@@ -28,7 +30,8 @@ class HomeState {
 
   factory HomeState.initial() {
     return HomeState(
-        isLoading: true,
+        currentPage: 0,
+        isLoading: false,
         hasMoreData: true,
         status: LoadingStatus.idle,
         bannerHeight: 0,
@@ -37,6 +40,7 @@ class HomeState {
   }
 
   HomeState copyWith(
+      int currentPage,
       bool isLoading,
       bool hasMoreData,
       LoadingStatus status,
@@ -44,6 +48,7 @@ class HomeState {
       List<BannerData> bannerList,
       List<HomeArticle> articleList) {
     return HomeState(
+        currentPage: currentPage ?? this.currentPage,
         isLoading: isLoading ?? this.isLoading,
         hasMoreData: hasMoreData ?? this.hasMoreData,
         status: status ?? this.status,

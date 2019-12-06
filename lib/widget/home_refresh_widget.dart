@@ -22,7 +22,7 @@ class HomeRefreshWidget<T> extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(vertical: 25.0),
-      child: isLoading
+      child: hasMoreData
           ? _loadingStateWidget()
           : Text("No more data.", style: TextStyle(fontSize: 16.0)),
     );

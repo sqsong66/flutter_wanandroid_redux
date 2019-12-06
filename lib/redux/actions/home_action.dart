@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/data/banner_data.dart';
 import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 import 'package:flutter_wanandroid_redux/network/wan_android_api.dart';
+import 'package:flutter_wanandroid_redux/redux/state/app_state.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
-ThunkAction refreshBannerData(BuildContext context) {
-  return (Store store) async {
+ThunkAction<AppState> refreshBannerData(BuildContext context) {
+  return (Store<AppState> store) async {
     List<BannerData> bannerList = await WanAndroidApi().getBannerList();
     double bannerHeight = 0;
     if (bannerList == null) {
@@ -33,8 +34,8 @@ Future<ui.Image> _getImage(String url) async {
   return completer.future;
 }
 
-ThunkAction loadHomeArticle() {
-  return (Store store) async {
+ThunkAction<AppState> loadHomeArticle() {
+  return (Store<AppState>  store) async {
     try {
       HomeArticleBean bean = await WanAndroidApi().getHomeArticles(0);
       if (bean.errorCode == 0 && bean.data != null) {

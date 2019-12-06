@@ -58,6 +58,7 @@ class HomeArticleWidget extends StatelessWidget {
 
   Widget _chapterWiget(BuildContext context, String text) {
     return Container(
+      margin: EdgeInsets.only(top: 8.0),
       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       decoration: BoxDecoration(
           color: Theme.of(context).disabledColor,
@@ -104,22 +105,26 @@ class HomeArticleWidget extends StatelessWidget {
                                 fontSize: 18.0,
                                 wordSpacing: 1.0),
                           ),
-                          SizedBox(height: 10.0),
+                          SizedBox(height: 5.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  article.superChapterName.isEmpty
-                                      ? SizedBox()
-                                      : _chapterWiget(
-                                          context, article.superChapterName),
-                                  SizedBox(width: 12.0),
-                                  article.chapterName.isEmpty
-                                      ? SizedBox()
-                                      : _chapterWiget(
-                                          context, article.chapterName),
-                                ],
+                              Flexible(
+                                flex: 1,
+                                child: Wrap(
+                                  direction: Axis.horizontal,
+                                  children: <Widget>[
+                                    article.superChapterName.isEmpty
+                                        ? SizedBox()
+                                        : _chapterWiget(
+                                            context, article.superChapterName),
+                                    SizedBox(width: 12.0),
+                                    article.chapterName.isEmpty
+                                        ? SizedBox()
+                                        : _chapterWiget(
+                                            context, article.chapterName),
+                                  ],
+                                ),
                               ),
                               Row(
                                 children: <Widget>[
@@ -129,7 +134,8 @@ class HomeArticleWidget extends StatelessWidget {
                                   ),
                                   SizedBox(width: 8.0),
                                   CircleRippleWidget(
-                                    icon: Icon(Icons.star, size: 24.0),
+                                    icon:
+                                        Icon(Icons.favorite_border, size: 24.0),
                                     onClick: () {},
                                   )
                                 ],

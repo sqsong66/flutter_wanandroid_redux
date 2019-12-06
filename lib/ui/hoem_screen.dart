@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen>
     return StoreConnector<AppState, HomeViewModel>(
         onInit: (store) {
           store.dispatch(refreshBannerData(context));
-          store.dispatch(loadHomeArticle());
+          store.dispatch(loadHomeArticle(true));
         },
         converter: (store) => HomeViewModel.fromStore(store),
         builder: (context, viewModel) {
@@ -38,10 +38,12 @@ class _HomeScreenState extends State<HomeScreen>
               bannerHeight: viewModel.bannerHeight,
             ),
             refreshData: () async {
-              viewModel.refreshEvents(context);
+              viewModel.refreshEvents(context, true);
               return Future.delayed(Duration(milliseconds: 1500));
             },
-            onLoadMore: () {},
+            onLoadMore: () {
+              viewModel.refreshEvents(context, false);
+            },
             buildItem: (BuildContext context, HomeArticle data, int index) {
               return HomeArticleWidget(article: data);
             },

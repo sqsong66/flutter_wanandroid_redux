@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 
-class HomeRefreshWidget<T> extends StatelessWidget {
+typedef HomeArticleBuilder = Widget Function(BuildContext context, HomeArticle article, int index);
+
+class HomeRefreshWidget<T> extends StatefulWidget {
   final bool isLoading;
   final bool hasMoreData;
   final List<T> dataList;
   final Widget headerWidget;
-  final RefreshCallback refreshData;
   final VoidCallback onLoadMore;
-  final Function(BuildContext context, T data, int index) buildItem;
+  final RefreshCallback refreshData;
+  final HomeArticleBuilder buildItem;
 
   HomeRefreshWidget(
       {@required this.isLoading,
@@ -18,11 +21,40 @@ class HomeRefreshWidget<T> extends StatelessWidget {
       @required this.onLoadMore,
       @required this.buildItem});
 
+  @override
+  _HomeRefreshWidgetState createState() => _HomeRefreshWidgetState();
+}
+
+class _HomeRefreshWidgetState extends State<HomeRefreshWidget> {
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _getMoreData();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  void _getMoreData() {
+    if (!widget.isLoading && widget.hasMoreData) widget.onLoadMore();
+  }
+
   Widget _loadingItemWidget() {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(vertical: 25.0),
-      child: hasMoreData
+      child: widget.hasMoreData
           ? _loadingStateWidget()
           : Text("No more data.", style: TextStyle(fontSize: 16.0)),
     );
@@ -50,16 +82,20 @@ class HomeRefreshWidget<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: RefreshIndicator(
-        onRefresh: refreshData,
+        onRefresh: widget.refreshData,
         child: ListView.builder(
-          itemCount: dataList == null ? 0 : dataList.length + 2,
+          controller: _scrollController,
+          itemCount: widget.dataList == null ? 0 : widget.dataList.length + 2,
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
-              return headerWidget == null ? Container() : headerWidget;
-            } else if (index == dataList.length + 1) {
+              return widget.headerWidget == null
+                  ? Container()
+                  : widget.headerWidget;
+            } else if (index == widget.dataList.length + 1) {
               return _loadingItemWidget();
             } else {
-              return buildItem(context, dataList[index - 1], index - 1);
+              return widget.buildItem(
+                  context, widget.dataList[index - 1], index - 1);
             }
           },
         ),

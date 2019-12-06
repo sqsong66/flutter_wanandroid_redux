@@ -14,7 +14,7 @@ class HomeViewModel {
   final double bannerHeight;
   final List<BannerData> bannerList;
   final List<HomeArticle> articleList;
-  final Function(BuildContext context) refreshEvents;
+  final Function(BuildContext context, bool isLoadMoreArticle) refreshEvents;
 
   HomeViewModel(
       {@required this.isLoading,
@@ -33,9 +33,11 @@ class HomeViewModel {
         bannerHeight: store.state.homeState.bannerHeight,
         bannerList: store.state.homeState.bannerList,
         articleList: store.state.homeState.articleList,
-        refreshEvents: (context) {
-          store.dispatch(refreshBannerData(context));
-          store.dispatch(loadHomeArticle());
+        refreshEvents: (context, isRefresh) {
+          if (isRefresh) {
+            store.dispatch(refreshBannerData(context));
+          }
+          store.dispatch(loadHomeArticle(isRefresh));
         });
   }
 }

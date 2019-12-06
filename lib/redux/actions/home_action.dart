@@ -21,8 +21,8 @@ ThunkAction<AppState> refreshBannerData(BuildContext context) {
       bannerHeight =
           (screenWidth - 2 * 10.0) * image.height / image.width + 16.0;
     }
-    store.dispatch(
-        HomeBannerUpdatedAction(bannerList: bannerList, bannerHeight: bannerHeight));
+    store.dispatch(HomeBannerUpdatedAction(
+        bannerList: bannerList, bannerHeight: bannerHeight));
   };
 }
 
@@ -34,13 +34,19 @@ Future<ui.Image> _getImage(String url) async {
   return completer.future;
 }
 
-ThunkAction<AppState> loadHomeArticle() {
-  return (Store<AppState>  store) async {
+ThunkAction<AppState> loadHomeArticle(bool isRefresh) {
+  return (Store<AppState> store) async {
     try {
-      HomeArticleBean bean = await WanAndroidApi().getHomeArticles(0);
+      int currentPage = isRefresh ? 0 : store.state.homeState.currentPage + 1;
+      store.dispatch(RefreshHomeArticleAction(currentPage: currentPage));
+      HomeArticleBean bean = await WanAndroidApi().getHomeArticles(currentPage);
       if (bean.errorCode == 0 && bean.data != null) {
-        List<HomeArticle> articleList = bean.data.datas;
-        store.dispatch(HomeArticleUpdateAction(articleList: articleList));
+        List<HomeArticle> articleList = store.state.homeState.articleList;
+        if (isRefresh) articleList.clear();
+        articleList.addAll(bean.data.datas);
+        bool hasMoreData = articleList.length < bean.data.total;
+        store.dispatch(HomeArticleUpdateAction(
+            hasMoreData: hasMoreData, articleList: articleList));
       }
     } catch (e) {
       print(e.toString());
@@ -59,8 +65,9 @@ class HomeBannerUpdatedAction {
 }
 
 class HomeArticleUpdateAction {
-  List<HomeArticle> articleList;
-  HomeArticleUpdateAction({this.articleList});
+  final bool hasMoreData;
+  final List<HomeArticle> articleList;
+  HomeArticleUpdateAction({this.hasMoreData, this.articleList});
 }
 
 class RefreshHomeArticleAction {

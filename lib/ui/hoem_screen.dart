@@ -44,8 +44,8 @@ class _HomeScreenState extends State<HomeScreen>
             onLoadMore: () {
               viewModel.refreshEvents(context, false);
             },
-            buildItem: (BuildContext context, HomeArticle data, int index) {
-              return HomeArticleWidget(article: data);
+            buildItem: (BuildContext context, dynamic data, int index) {
+              return data is HomeArticle ? HomeArticleWidget(article: data) : Container();
             },
           );
         });

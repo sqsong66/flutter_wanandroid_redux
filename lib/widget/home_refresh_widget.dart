@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 
-typedef HomeArticleBuilder = Widget Function(BuildContext context, HomeArticle article, int index);
+typedef HomeArticleBuilder<T> = Widget Function(
+    BuildContext context, T article, int index);
 
 class HomeRefreshWidget<T> extends StatefulWidget {
   final bool isLoading;

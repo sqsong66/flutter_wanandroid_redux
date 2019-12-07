@@ -7,8 +7,15 @@ import 'label_view.dart';
 
 class HomeArticleWidget extends StatelessWidget {
   final HomeArticle article;
+  final Function(String, String) onItemClick;
+  final Function(String) onShare;
+  final Function(HomeArticle) onStar;
 
-  HomeArticleWidget({@required this.article});
+  HomeArticleWidget(
+      {@required this.article,
+      @required this.onItemClick,
+      @required this.onShare,
+      @required this.onStar});
 
   Widget _circleTextWidget(BuildContext context, String text) {
     return CircleAvatar(
@@ -85,7 +92,9 @@ class HomeArticleWidget extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            onItemClick(article.title, article.link);
+          },
           borderRadius: BorderRadius.circular(5.0),
           child: Stack(
             children: <Widget>[
@@ -130,7 +139,9 @@ class HomeArticleWidget extends StatelessWidget {
                                 children: <Widget>[
                                   CircleRippleWidget(
                                     icon: Icon(Icons.share, size: 24.0),
-                                    onClick: () {},
+                                    onClick: () {
+                                      onShare(article.link);
+                                    },
                                   ),
                                   SizedBox(width: 8.0),
                                   CircleRippleWidget(

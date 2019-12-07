@@ -9,14 +9,17 @@ const TOTAL_PAGES = 100000;
 class BannerWidget extends StatefulWidget {
   final double bannerHeight;
   final List<BannerData> bannerLists;
+  final Function(String, String) bannerClick;
 
-  BannerWidget({@required this.bannerLists, this.bannerHeight});
+  BannerWidget(
+      {@required this.bannerLists, this.bannerHeight, this.bannerClick});
 
   @override
   _BannerWidgetState createState() => _BannerWidgetState();
 }
 
-class _BannerWidgetState extends State<BannerWidget> with AutomaticKeepAliveClientMixin<BannerWidget> {
+class _BannerWidgetState extends State<BannerWidget>
+    with AutomaticKeepAliveClientMixin<BannerWidget> {
   Timer _timer;
   int _currentIndex = 0;
   PreloadPageController _pageController;
@@ -88,18 +91,22 @@ class _BannerWidgetState extends State<BannerWidget> with AutomaticKeepAliveClie
         });
       },
       itemBuilder: (BuildContext context, int index) {
+        BannerData bannerData =
+            widget.bannerLists[index % widget.bannerLists.length];
         return Container(
           margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 16.0),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                String title = bannerData.title;
+                String link = bannerData.url;
+                widget.bannerClick(title, link);
+              },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: Image(
-                  image: NetworkImage(widget
-                      .bannerLists[index % widget.bannerLists.length]
-                      .imagePath),
+                  image: NetworkImage(bannerData.imagePath),
                   fit: BoxFit.cover,
                 ),
               ),

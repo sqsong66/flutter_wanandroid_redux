@@ -70,16 +70,6 @@ class _MainScreenState extends State<MainScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _getTitleText(),
-          style: TextStyle(
-            fontSize: 22.0,
-            fontFamily: "Source Code Pro",
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
       body: _buildContent(),
     );
   }

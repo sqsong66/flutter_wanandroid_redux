@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.11"
+  cookie_jar:
+    dependency: "direct main"
+    description:
+      name: cookie_jar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -50,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.7"
+  dio_cookie_manager:
+    dependency: "direct main"
+    description:
+      name: dio_cookie_manager
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   esys_flutter_share:
     dependency: "direct main"
     description:
@@ -138,7 +152,7 @@ packages:
     source: hosted
     version: "1.6.4"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"

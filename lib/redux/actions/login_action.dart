@@ -6,7 +6,7 @@ import 'package:redux_thunk/redux_thunk.dart';
 ThunkAction startLogin(String account, String password) {
   return (Store store) async {
     store.dispatch(LoginLoadingAction());
-    LoginResult result = await WanAndroidApi().login(account, password);
+    LoginResult result = await WanAndroidApi.getInstance().login(account, password);
     if (result.errorCode == 0) {
       store.dispatch(LoginSuccessAction(result.data));
     } else {

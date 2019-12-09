@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/ui/hoem_screen.dart';
+import 'package:flutter_wanandroid_redux/ui/project_screen.dart';
 import 'package:flutter_wanandroid_redux/ui/test_screen.dart';
 import 'package:flutter_wanandroid_redux/widget/home_bottom_bar.dart';
 
@@ -25,21 +26,6 @@ class _MainScreenState extends State<MainScreen>
     _tabController.dispose();
   }
 
-  String _getTitleText() {
-    String title = "";
-    switch (_selectedTab) {
-      case 1:
-        title = "Project";
-        break;
-      case 2:
-        title = "Setting";
-        break;
-      default:
-        title = "Home";
-    }
-    return title;
-  }
-
   Widget _buildContent() {
     return Column(
       children: <Widget>[
@@ -48,8 +34,8 @@ class _MainScreenState extends State<MainScreen>
             controller: _tabController,
             physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
-              HomeScreen(titleText: "Home"),
-              TestScreen(titleText: "Project"),
+              HomeScreen(),
+              ProjectScreen(),
               TestScreen(titleText: "Setting"),
             ],
           ),

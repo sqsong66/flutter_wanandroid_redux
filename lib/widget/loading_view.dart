@@ -37,9 +37,6 @@ class LoadingViewState extends State<LoadingView>
   bool get errorContentVisible => _errorController.value == 1.0;
   bool get successContentVisible => _successController.value == 1.0;
 
-  Widget firstChild;
-  Widget secondChild;
-
   Queue<ValueGetter<TickerFuture>> _animationStack = Queue();
 
   @override

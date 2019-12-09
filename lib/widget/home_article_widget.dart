@@ -145,9 +145,15 @@ class HomeArticleWidget extends StatelessWidget {
                                   ),
                                   SizedBox(width: 8.0),
                                   CircleRippleWidget(
-                                    icon:
-                                        Icon(Icons.favorite_border, size: 24.0),
-                                    onClick: () {},
+                                    icon: article.collect
+                                        ? Icon(Icons.favorite,
+                                            color: Colors.redAccent, // Theme.of(context).accentColor
+                                            size: 24.0)
+                                        : Icon(Icons.favorite_border,
+                                            size: 24.0),
+                                    onClick: () {
+                                      onStar(article);
+                                    },
                                   )
                                 ],
                               )

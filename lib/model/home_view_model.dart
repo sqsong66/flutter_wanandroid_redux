@@ -15,6 +15,7 @@ class HomeViewModel {
   final List<BannerData> bannerList;
   final List<HomeArticle> articleList;
   final Function(BuildContext context, bool isLoadMoreArticle) refreshEvents;
+  final Function(int articleId, int articleIndex, bool isCollect) starArticle;
 
   HomeViewModel(
       {@required this.isLoading,
@@ -23,7 +24,8 @@ class HomeViewModel {
       @required this.bannerHeight,
       @required this.bannerList,
       @required this.articleList,
-      @required this.refreshEvents});
+      @required this.refreshEvents,
+      @required this.starArticle});
 
   static HomeViewModel fromStore(Store<AppState> store) {
     return HomeViewModel(
@@ -35,9 +37,13 @@ class HomeViewModel {
         articleList: store.state.homeState.articleList,
         refreshEvents: (context, isRefresh) {
           if (isRefresh) {
-            store.dispatch(refreshBannerData(context));
+            store.dispatch(refreshBannerDataAction(context));
           }
-          store.dispatch(loadHomeArticle(isRefresh));
+          store.dispatch(loadHomeArticleAction(isRefresh));
+        },
+        starArticle: (sarticleId, articleIndex, isCollect) {
+          store
+              .dispatch(starArticleAction(sarticleId, articleIndex, isCollect));
         });
   }
 }

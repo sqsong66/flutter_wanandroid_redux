@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (viewModel.loginStatus == 1) {
                   // Login success.
                   Fluttertoast.showToast(msg: "Login Success.");
-                  Navigator.of(context).pop();
+                  // Navigator.of(context).pop();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

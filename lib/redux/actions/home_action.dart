@@ -3,15 +3,19 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/data/banner_data.dart';
+import 'package:flutter_wanandroid_redux/data/base_data.dart';
 import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 import 'package:flutter_wanandroid_redux/network/wan_android_api.dart';
 import 'package:flutter_wanandroid_redux/redux/state/app_state.dart';
+import 'package:flutter_wanandroid_redux/redux/state/home_state.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
-ThunkAction<AppState> refreshBannerData(BuildContext context) {
+ThunkAction<AppState> refreshBannerDataAction(BuildContext context) {
   return (Store<AppState> store) async {
-    List<BannerData> bannerList = await WanAndroidApi().getBannerList();
+    List<BannerData> bannerList =
+        await WanAndroidApi.getInstance().getBannerList();
     double bannerHeight = 0;
     if (bannerList == null) {
       bannerList = [];
@@ -34,12 +38,15 @@ Future<ui.Image> _getImage(String url) async {
   return completer.future;
 }
 
-ThunkAction<AppState> loadHomeArticle(bool isRefresh) {
+ThunkAction<AppState> loadHomeArticleAction(bool isRefresh) {
   return (Store<AppState> store) async {
     try {
       int currentPage = isRefresh ? 0 : store.state.homeState.currentPage + 1;
-      store.dispatch(RefreshHomeArticleAction(currentPage: currentPage));
-      HomeArticleBean bean = await WanAndroidApi().getHomeArticles(currentPage);
+      store.dispatch(RefreshHomeArticleAction(
+        currentPage: currentPage,
+      ));
+      HomeArticleBean bean =
+          await WanAndroidApi.getInstance().getHomeArticles(currentPage);
       if (bean.errorCode == 0 && bean.data != null) {
         List<HomeArticle> articleList = store.state.homeState.articleList;
         if (isRefresh) articleList.clear();
@@ -47,9 +54,40 @@ ThunkAction<AppState> loadHomeArticle(bool isRefresh) {
         bool hasMoreData = articleList.length < bean.data.total;
         store.dispatch(HomeArticleUpdateAction(
             hasMoreData: hasMoreData, articleList: articleList));
+        store.dispatch(LoadStatusAction(status: LoadingStatus.success));
+      } else {
+        if (isRefresh) {
+          store.dispatch(LoadStatusAction(status: LoadingStatus.error));
+        } else {
+          Fluttertoast.showToast(msg: bean.errorMsg);
+        }
       }
     } catch (e) {
       print(e.toString());
+      if (isRefresh) {
+        store.dispatch(LoadStatusAction(status: LoadingStatus.error));
+      } else {
+        Fluttertoast.showToast(msg: "Something wrong.");
+      }
+    }
+  };
+}
+
+ThunkAction<AppState> starArticleAction(
+    int articleId, int articleIndex, bool isCollect) {
+  return (Store<AppState> store) async {
+    BaseData data =
+        await WanAndroidApi.getInstance().collectArticle(articleId, isCollect);
+    if (data != null && data.errorCode == 0) {
+      List<HomeArticle> articleList = store.state.homeState.articleList;
+      if (articleIndex >= 0 && articleIndex < articleList.length) {
+        articleList[articleIndex].collect = isCollect;
+        store.dispatch(CollectArticleAction());
+        String message = isCollect ? "收藏成功" : "取消收藏成功";
+        Fluttertoast.showToast(msg: message);
+      }
+    } else {
+      Fluttertoast.showToast(msg: data.errorMsg);
     }
   };
 }
@@ -73,4 +111,13 @@ class HomeArticleUpdateAction {
 class RefreshHomeArticleAction {
   final int currentPage;
   RefreshHomeArticleAction({this.currentPage});
+}
+
+class CollectArticleAction {
+  CollectArticleAction();
+}
+
+class LoadStatusAction {
+  final LoadingStatus status;
+  LoadStatusAction({this.status});
 }

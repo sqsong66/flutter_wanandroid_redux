@@ -14,7 +14,7 @@ class HomeViewModel {
   final double bannerHeight;
   final List<BannerData> bannerList;
   final List<HomeArticle> articleList;
-  final Function(BuildContext context, bool isLoadMoreArticle) refreshEvents;
+  final Function(BuildContext context, bool isRefresh) refreshEvents;
   final Function(int articleId, int articleIndex, bool isCollect) starArticle;
 
   HomeViewModel(

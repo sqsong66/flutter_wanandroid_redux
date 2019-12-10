@@ -83,4 +83,11 @@ class WanAndroidApi {
     Response response = await _dio.get(projectClassifyUrl);
     return ProjectClassifyBean.fromJson(response.data);
   }
+
+  Future<HomeArticleBean> requestProjectData(int page, int classifyId) async {
+    String url = "/project/list/$page/json";
+    Response response =
+        await _dio.get(url, queryParameters: {"cid": classifyId});
+    return HomeArticleBean.fromJson(response.data);
+  }
 }

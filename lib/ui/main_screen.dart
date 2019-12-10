@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/ui/hoem_screen.dart';
 import 'package:flutter_wanandroid_redux/ui/project_screen.dart';
-import 'package:flutter_wanandroid_redux/ui/test_screen.dart';
+import 'package:flutter_wanandroid_redux/ui/setting_screen.dart';
 import 'package:flutter_wanandroid_redux/widget/home_bottom_bar.dart';
 
 class MainScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _MainScreenState extends State<MainScreen>
             children: <Widget>[
               HomeScreen(),
               ProjectScreen(),
-              TestScreen(titleText: "Setting"),
+              SettingScreen(),
             ],
           ),
         ),

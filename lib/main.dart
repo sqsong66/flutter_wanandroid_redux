@@ -28,7 +28,7 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
       store: widget.store,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey,
+        // navigatorKey: navigatorKey,
         title: 'Wan Android',
         theme: ThemeData.dark().copyWith(
           textTheme:

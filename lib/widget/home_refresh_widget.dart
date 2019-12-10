@@ -26,6 +26,7 @@ class HomeRefreshWidget<T> extends StatefulWidget {
 }
 
 class _HomeRefreshWidgetState extends State<HomeRefreshWidget> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   ScrollController _scrollController;
 
   @override
@@ -82,6 +83,7 @@ class _HomeRefreshWidgetState extends State<HomeRefreshWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: RefreshIndicator(
+        key: _refreshIndicatorKey,
         onRefresh: widget.refreshData,
         child: ListView.builder(
           controller: _scrollController,

@@ -44,6 +44,8 @@ flutter:
     - assets/images/image10.jpg
     - assets/images/image11.jpg
     - assets/images/image12.jpg
+    - assets/images/avatar.png
+    - assets/images/setting_background.jpg
     - assets/images/horizontal_placeholder.jpg
   fonts:
     - family: Source Code Pro

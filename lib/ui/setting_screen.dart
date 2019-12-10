@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -6,6 +8,8 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  double _contentMargin = 65;
+
   @override
   Widget build(BuildContext context) {
     double topPadding = MediaQuery.of(context).padding.top + kToolbarHeight;
@@ -15,13 +19,22 @@ class _SettingScreenState extends State<SettingScreen> {
           SliverPersistentHeader(
             pinned: true,
             delegate:
-                SliverSettingBar(expandedHeight: 250, topPadding: topPadding),
+                SliverSettingBar(expandedHeight: 220, topPadding: topPadding),
           ),
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
               Container(
                 height: MediaQuery.of(context).size.height - topPadding,
-                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: _contentMargin),
+                    Text("Hello World", style: TextStyle(fontSize: 16.0)),
+                    Text("Hello World", style: TextStyle(fontSize: 16.0)),
+                    Text("Hello World", style: TextStyle(fontSize: 16.0)),
+                    Text("Hello World", style: TextStyle(fontSize: 16.0)),
+                  ],
+                ),
               )
             ]),
           )
@@ -50,31 +63,46 @@ class SliverSettingBar extends SliverPersistentHeaderDelegate {
     double screenWidth = MediaQuery.of(context).size.width;
     double statusHeight = MediaQuery.of(context).padding.top;
     double percent = shrinkOffset / (expandedHeight - statusHeight);
-    print(
-        "ShrinkOffset: $shrinkOffset, TopPadding: $topPadding, Percent: $percent");
 
+    double newPercent = (shrinkOffset + statusHeight) / expandedHeight;
+
+    print(
+        "ShrinkOffset: $shrinkOffset, kToolbarHeight: $kToolbarHeight, TopPadding: $topPadding, Percent: $percent, newPercent: $newPercent");
+    log("message");
     double avatarSize = minAvatarSize * percent + maxAvatarSize * (1 - percent);
     double startLeft = 16.0;
     double startTop = statusHeight + (kToolbarHeight - minAvatarSize) / 2;
 
     double left =
         (screenWidth - maxAvatarSize) / 2 * (1 - percent) + startLeft * percent;
-    double top = expandedHeight - maxAvatarSize / 2 - (expandedHeight - avatarSize / 2 - startTop) * percent;
-
-    double _getTopOffset() {
-      double top = (expandedHeight - avatarSize / 2) * (1 - percent);
-      if (top < startTop) {
-        top = startTop;
-      }
-      return top;
-    }
+    double top = statusHeight +
+        (kToolbarHeight - minAvatarSize) / 2 +
+        (expandedHeight -
+                maxAvatarSize / 2 -
+                (statusHeight + (kToolbarHeight - minAvatarSize) / 2)) *
+            (1 - percent);
 
     return Stack(
       fit: StackFit.expand,
       overflow: Overflow.visible,
       children: <Widget>[
         Image(
-            image: AssetImage("assets/images/image05.jpg"), fit: BoxFit.cover),
+            image: AssetImage("assets/images/setting_background.jpg"),
+            fit: BoxFit.cover),
+        Positioned(
+          left: 32 + minAvatarSize,
+          top: statusHeight + (kToolbarHeight - minAvatarSize) / 2,
+          child: Opacity(
+            opacity: percent,
+            child: Text(
+              "SQSong",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22.0 * percent,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
         Positioned(
           left: left,
           top: top,
@@ -92,7 +120,7 @@ class SliverSettingBar extends SliverPersistentHeaderDelegate {
                 )
               ],
               image: DecorationImage(
-                  image: AssetImage("assets/images/image02.jpg"),
+                  image: AssetImage("assets/images/avatar.png"),
                   fit: BoxFit.cover),
             ),
           ),

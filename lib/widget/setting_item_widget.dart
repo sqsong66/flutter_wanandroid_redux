@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 class SettingItemWidget extends StatelessWidget {
   final IconData icon;
   final String title;
-  SettingItemWidget({@required this.icon, @required this.title});
+  final Function onClick;
+  SettingItemWidget({@required this.icon, @required this.title, this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onClick();
+        },
         child: Container(
           color: Colors.black12,
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),

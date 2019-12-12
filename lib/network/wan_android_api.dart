@@ -39,6 +39,10 @@ class WanAndroidApi {
     return _instance;
   }
 
+  void clearCookies() {
+    _cookieJar?.deleteAll();
+  }
+
   List<Cookie> loadCookies() {
     Uri uri = Uri.https(
         "www.wanandroid.com", "https://www.wanandroid.com/user/login");

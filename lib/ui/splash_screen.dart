@@ -38,7 +38,7 @@ class SplashScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) {
                       List<Cookie> cookieList =
                           WanAndroidApi.getInstance().loadCookies();
-                      if (cookieList == null || cookieList.isEmpty) {
+                      if (cookieList == null || cookieList.length < 2) {
                         return LoginScreen();
                       } else {
                         return MainScreen();

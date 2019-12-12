@@ -20,7 +20,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isDialogShowing = false;
+  bool _isLoginSuccess = false;
   int _imageIndex = Random().nextInt(12);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,30 +48,28 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Center(
                 child: StoreConnector<AppState, LoginViewModel>(
+              distinct: true,
               converter: (store) => LoginViewModel.fromStore(store),
               builder: (context, viewModel) => LoginWidget(viewModel),
               onDidChange: (viewModel) {
-                if (viewModel.isLoading) {
+                print(
+                    "onDidChange -----------------> ${viewModel.loginStatus}");
+                if (viewModel.loginStatus == 0) {
                   showLoadingDialog(context, "Logining...");
                   _isDialogShowing = true;
-                } else {
-                  if (_isDialogShowing) {
-                    Navigator.of(context).pop();
-                  }
-                }
-
-                if (viewModel.loginStatus == 1) {
-                  // Login success.
-                  Fluttertoast.showToast(msg: "Login Success.");
-                  // Navigator.of(context).pop();
+                } else if (viewModel.loginStatus == 1 && !_isLoginSuccess) {
+                  _isLoginSuccess = true;
+                  Navigator.of(context).pop();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => MainScreen(),
                     ),
                   );
-                }
-                if (viewModel.loginStatus == 2) {
+                } else if (viewModel.loginStatus == 2) {
+                  if (_isDialogShowing) {
+                    Navigator.of(context).pop();
+                  }
                   // Login error.
                   Fluttertoast.showToast(msg: viewModel.errorMessage);
                 }

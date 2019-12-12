@@ -7,6 +7,7 @@ ThunkAction startLogin(String account, String password) {
   return (Store store) async {
     store.dispatch(LoginLoadingAction());
     LoginResult result = await WanAndroidApi.getInstance().login(account, password);
+    print("Start login -------------------------------------->");
     if (result.errorCode == 0) {
       store.dispatch(LoginSuccessAction(result.data));
     } else {

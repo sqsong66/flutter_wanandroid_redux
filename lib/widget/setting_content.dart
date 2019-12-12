@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid_redux/network/wan_android_api.dart';
 import 'package:flutter_wanandroid_redux/widget/setting_item_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -22,7 +23,9 @@ class SettingContent extends StatelessWidget {
           SizedBox(height: 1.0),
           SettingItemWidget(icon: FontAwesomeIcons.gift, title: "Welfare"),
           SizedBox(height: 1.0),
-          SettingItemWidget(icon: FontAwesomeIcons.signOutAlt, title: "Login Out"),
+          SettingItemWidget(icon: FontAwesomeIcons.signOutAlt, title: "Login Out", onClick: (){
+            WanAndroidApi.getInstance().clearCookies();
+          },),
         ],
       ),
     );

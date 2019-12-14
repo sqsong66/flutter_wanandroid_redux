@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/widget/setting_content.dart';
 
+import '../network/wan_android_api.dart';
+
 class SettingScreen extends StatefulWidget {
   @override
   _SettingScreenState createState() => _SettingScreenState();
@@ -10,7 +12,6 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen>
     with AutomaticKeepAliveClientMixin<SettingScreen> {
-  double _contentMargin = 65;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +131,7 @@ class SliverSettingBar extends SliverPersistentHeaderDelegate {
       child: Opacity(
         opacity: percent,
         child: Text(
-          "SQSong",
+          _getUserName(),
           style: TextStyle(
               color: Colors.white,
               fontSize: 22.0 * percent,
@@ -138,6 +139,14 @@ class SliverSettingBar extends SliverPersistentHeaderDelegate {
         ),
       ),
     );
+  }
+
+  String _getUserName() {
+    String userName = WanAndroidApi.getInstance().getLoginUserName();
+    if (userName.isNotEmpty) {
+      return userName;
+    }
+    return "Tourists";
   }
 
   @override

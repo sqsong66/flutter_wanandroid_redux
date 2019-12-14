@@ -7,6 +7,7 @@ import 'package:flutter_wanandroid_redux/ui/splash_screen.dart';
 import 'package:redux/redux.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await WanAndroidApi.getInstance().init();
   runApp(WanAndroidApp(createStore()));
 }
@@ -28,7 +29,7 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
       store: widget.store,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        // navigatorKey: navigatorKey,
+        navigatorKey: navigatorKey,
         title: 'Wan Android',
         theme: ThemeData.dark().copyWith(
           textTheme:

@@ -43,6 +43,19 @@ class WanAndroidApi {
     _cookieJar?.deleteAll();
   }
 
+  String getLoginUserName() {
+    List<Cookie> cookies = loadCookies();
+    if (cookies != null && cookies.isNotEmpty) {
+      for (int i=0; i< cookies.length; i++) {
+        var cookie = cookies[i];
+        if (cookie.name == "loginUserName") {
+          return cookie.value;
+        }
+      }
+    }
+    return null;
+  }
+
   List<Cookie> loadCookies() {
     Uri uri = Uri.https(
         "www.wanandroid.com", "https://www.wanandroid.com/user/login");

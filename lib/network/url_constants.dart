@@ -5,3 +5,5 @@ const String loginUrl = "/user/login";
 const String bannerUrl = "/banner/json";
 
 const String projectClassifyUrl = "/project/tree/json";
+
+const String hotSearchUrl = "/hotkey/json";

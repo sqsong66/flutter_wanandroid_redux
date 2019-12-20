@@ -7,6 +7,7 @@ enum LoadingStatus {
   loading,
   error,
   success,
+  empty,
 }
 
 @immutable

@@ -6,11 +6,13 @@ import 'package:flutter_wanandroid_redux/model/home_view_model.dart';
 import 'package:flutter_wanandroid_redux/redux/actions/home_action.dart';
 import 'package:flutter_wanandroid_redux/redux/state/app_state.dart';
 import 'package:flutter_wanandroid_redux/redux/state/home_state.dart';
+import 'package:flutter_wanandroid_redux/route/hot_search_popup.dart';
 import 'package:flutter_wanandroid_redux/ui/webview_screen.dart';
 import 'package:flutter_wanandroid_redux/widget/banner_widget.dart';
 import 'package:flutter_wanandroid_redux/widget/circle_ripple_widget.dart';
 import 'package:flutter_wanandroid_redux/widget/home_article_widget.dart';
 import 'package:flutter_wanandroid_redux/widget/home_refresh_widget.dart';
+import 'package:flutter_wanandroid_redux/widget/load_empty_widget.dart';
 import 'package:flutter_wanandroid_redux/widget/load_error_widget.dart';
 import 'package:flutter_wanandroid_redux/widget/loading_view.dart';
 import 'package:flutter_wanandroid_redux/widget/loading_widget.dart';
@@ -47,7 +49,9 @@ class _HomeScreenState extends State<HomeScreen>
           height: 60.0,
           child: CircleRippleWidget(
             icon: Icon(Icons.search, size: 24.0),
-            onClick: () {},
+            onClick: () {
+              Navigator.push(context, HotSearchPopup());
+            },
           ),
         )
       ],
@@ -109,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen>
               status: viewModel.status,
               errorContent: LoadErrorWidget(),
               loadingContent: LoadingWidget(),
+              emptyContent: LoadEmptyWidget(),
               successContent: _contentWidget(viewModel),
             ),
           );

@@ -7,6 +7,7 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter_wanandroid_redux/data/banner_data.dart';
 import 'package:flutter_wanandroid_redux/data/base_data.dart';
 import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
+import 'package:flutter_wanandroid_redux/data/hot_search_key_bean.dart';
 import 'package:flutter_wanandroid_redux/data/login_result.dart';
 import 'package:flutter_wanandroid_redux/data/project_classify_bean.dart';
 import 'package:flutter_wanandroid_redux/main.dart';
@@ -46,7 +47,7 @@ class WanAndroidApi {
   String getLoginUserName() {
     List<Cookie> cookies = loadCookies();
     if (cookies != null && cookies.isNotEmpty) {
-      for (int i=0; i< cookies.length; i++) {
+      for (int i = 0; i < cookies.length; i++) {
         var cookie = cookies[i];
         if (cookie.name == "loginUserName") {
           return cookie.value;
@@ -105,6 +106,17 @@ class WanAndroidApi {
     String url = "/project/list/$page/json";
     Response response =
         await _dio.get(url, queryParameters: {"cid": classifyId});
+    return HomeArticleBean.fromJson(response.data);
+  }
+
+  Future<HotSearchKeyBean> requestHotSearchKey() async {
+    Response response = await _dio.get(hotSearchUrl);
+    return HotSearchKeyBean.fromJson(response.data);
+  }
+
+  Future<HomeArticleBean> searchArticles(String keyWord, int page) async {
+    String url = "/article/query/$page/json";
+    Response response = await _dio.post(url, data: {"k": keyWord});
     return HomeArticleBean.fromJson(response.data);
   }
 }

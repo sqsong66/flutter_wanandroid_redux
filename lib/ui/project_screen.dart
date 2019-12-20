@@ -6,6 +6,7 @@ import 'package:flutter_wanandroid_redux/redux/actions/project_action.dart';
 import 'package:flutter_wanandroid_redux/redux/state/app_state.dart';
 import 'package:flutter_wanandroid_redux/ui/webview_screen.dart';
 import 'package:flutter_wanandroid_redux/widget/home_refresh_widget.dart';
+import 'package:flutter_wanandroid_redux/widget/load_empty_widget.dart';
 import 'package:flutter_wanandroid_redux/widget/load_error_widget.dart';
 import 'package:flutter_wanandroid_redux/widget/loading_view.dart';
 import 'package:flutter_wanandroid_redux/widget/loading_widget.dart';
@@ -53,6 +54,7 @@ class _ProjectScreenState extends State<ProjectScreen>
           body: LoadingView(
             status: viewModel.status,
             loadingContent: LoadingWidget(),
+            emptyContent: LoadEmptyWidget(),
             errorContent: LoadErrorWidget(
               onRetry: () {
                 viewModel.retryEvents();

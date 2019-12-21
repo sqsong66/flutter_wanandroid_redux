@@ -8,5 +8,5 @@ final searchActionReducer = combineReducers<SearchActionState>([
 
 SearchActionState _updateSearchList(
     SearchActionState state, UpdateHotKeyAction action) {
-  return state.copyWith(action.hotKeyList, state.historyList);
+  return state.copyWith(action.hotKeyList, action.historyList);
 }

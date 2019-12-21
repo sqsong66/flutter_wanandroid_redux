@@ -50,7 +50,7 @@ class _ProjectAppBarState extends State<ProjectAppBar> {
       child: InkWell(
         onTap: _toggleProjectPop,
         child: Container(
-          height: double.infinity,
+          height: kToolbarHeight,
           color: isMenuOpen ? Colors.black12 : Colors.transparent,
           padding: EdgeInsets.symmetric(horizontal: 30.0),
           child: Row(

@@ -76,6 +76,7 @@ class _SearchBarState extends State<SearchBar> {
               child: TextField(
                 controller: _textController,
                 textInputAction: TextInputAction.search,
+                style: TextStyle(fontSize: 20.0),
                 decoration: InputDecoration(
                     border: InputBorder.none, hintText: "Search"),
                 autofocus: widget.autofocus,

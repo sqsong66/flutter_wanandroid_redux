@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid_redux/utils/common_utils.dart';
 import 'package:flutter_wanandroid_redux/widget/circle_ripple_widget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,7 +32,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(CommonUtils.removeHtmlTag(widget.title)),
         actions: <Widget>[
           SizedBox(width: 8.0),
           SizedBox(
@@ -41,8 +42,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
               icon: Icon(Icons.refresh, size: 24.0),
               onClick: () {
                 setState(() {
-                _showProgress = true;
-              });
+                  _showProgress = true;
+                });
                 _webViewController?.reload();
               },
             ),

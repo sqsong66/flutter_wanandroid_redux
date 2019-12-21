@@ -1,5 +1,6 @@
 import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 import 'package:flutter_wanandroid_redux/data/project_classify_bean.dart';
+import 'package:flutter_wanandroid_redux/redux/actions/home_action.dart';
 import 'package:flutter_wanandroid_redux/redux/actions/project_action.dart';
 import 'package:flutter_wanandroid_redux/redux/state/app_state.dart';
 import 'package:flutter_wanandroid_redux/redux/state/home_state.dart';
@@ -48,9 +49,9 @@ class ProjectViewModel {
               ProjectClassifyUpdateAction(classifyData: classfiyData));
           store.dispatch(requestProjectDataAction(true));
         },
-        starArticle: (sarticleId, articleIndex, isCollect) {
-          store
-              .dispatch(starProjectAction(sarticleId, articleIndex, isCollect));
+        starArticle: (articleId, articleIndex, isCollect) {
+          store.dispatch(
+              collectArticleAction(articleId, articleIndex, isCollect, 1));
         });
   }
 }

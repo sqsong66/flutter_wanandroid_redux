@@ -43,7 +43,7 @@ class HomeViewModel {
         },
         starArticle: (sarticleId, articleIndex, isCollect) {
           store
-              .dispatch(starArticleAction(sarticleId, articleIndex, isCollect));
+              .dispatch(collectArticleAction(sarticleId, articleIndex, isCollect, 0));
         });
   }
 }

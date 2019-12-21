@@ -7,7 +7,6 @@ import 'package:flutter_wanandroid_redux/redux/actions/pre_search_action.dart';
 import 'package:flutter_wanandroid_redux/redux/state/app_state.dart';
 import 'package:flutter_wanandroid_redux/ui/search_result_screen.dart';
 import 'package:flutter_wanandroid_redux/widget/search_bar.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redux/redux.dart';
 
 class HotSearchPopup extends PopupRoute {
@@ -55,6 +54,7 @@ class HotSearchPopup extends PopupRoute {
       converter: (Store store) => PreSearchModel.fromStore(store),
       builder: (BuildContext context, PreSearchModel viewModel) {
         return Scaffold(
+          backgroundColor: Colors.black38,
           body: Column(
             children: <Widget>[
               _buildContent(context, viewModel),
@@ -78,7 +78,6 @@ class HotSearchPopup extends PopupRoute {
         onTap: () {
           Navigator.of(context).pop();
         },
-        child: Container(color: Colors.black38),
       ),
     );
   }
@@ -145,45 +144,62 @@ class HotSearchPopup extends PopupRoute {
 
   Widget _buildSearchHistoryLayout(
       BuildContext context, PreSearchModel viewModel) {
-    return Padding(
-      padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text("Search History",
-                  style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                      decoration: TextDecoration.none)),
-              _buildClearWidget()
-            ],
-          ),
-          Material(
-            color: Colors.transparent,
-            child: RawChip(
-              onPressed: () {},
-              label: Text("Hello"),
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              deleteIcon: Icon(Icons.close, size: 18),
-              onDeleted: () {
-                Fluttertoast.showToast(msg: "delete");
-              },
+    List<String> historyList = viewModel.historyList;
+    return (historyList == null || historyList.isEmpty)
+        ? Container()
+        : Padding(
+            padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text("Search History",
+                        style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            decoration: TextDecoration.none)),
+                    _buildClearWidget(viewModel)
+                  ],
+                ),
+                Wrap(
+                    spacing: 8.0,
+                    children: viewModel.historyList
+                        .map((searchKey) => _buildSearchHistoryItem(
+                            context, searchKey, viewModel))
+                        .toList())
+              ],
             ),
-          )
-        ],
+          );
+  }
+
+  Widget _buildSearchHistoryItem(
+      BuildContext context, String text, PreSearchModel viewModel) {
+    return Material(
+      color: Colors.transparent,
+      child: RawChip(
+        onPressed: () {
+          _navigateToSearchResult(context, text);
+        },
+        label: Text(text),
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        deleteIcon: Icon(Icons.close, size: 18),
+        onDeleted: () {
+          viewModel.deleteAction(text, false);
+        },
       ),
     );
   }
 
-  Widget _buildClearWidget() {
+  Widget _buildClearWidget(PreSearchModel viewModel) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          viewModel.deleteAction(null, true);
+        },
         borderRadius: BorderRadius.circular(3.0),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),

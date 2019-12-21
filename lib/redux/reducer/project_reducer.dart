@@ -51,3 +51,4 @@ ProjectState _collectUpdate(ProjectState state, CollectArticleAction action) {
       state.classifyList,
       state.projectList);
 }
+

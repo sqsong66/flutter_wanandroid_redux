@@ -73,13 +73,20 @@ ThunkAction<AppState> loadHomeArticleAction(bool isRefresh) {
   };
 }
 
-ThunkAction<AppState> starArticleAction(
-    int articleId, int articleIndex, bool isCollect) {
+ThunkAction<AppState> collectArticleAction(
+    int articleId, int articleIndex, bool isCollect, int type) { // type: 0 - home article  1 - project article  2 - search article
   return (Store<AppState> store) async {
     BaseData data =
         await WanAndroidApi.getInstance().collectArticle(articleId, isCollect);
     if (data != null && data.errorCode == 0) {
-      List<HomeArticle> articleList = store.state.homeState.articleList;
+      List<HomeArticle> articleList;
+      if (type == 0) {
+        articleList = store.state.homeState.articleList;
+      } else if (type == 1) {
+        articleList = store.state.projectState.projectList;
+      } else {
+        articleList = store.state.searchResultSate.articleList;
+      }
       if (articleIndex >= 0 && articleIndex < articleList.length) {
         articleList[articleIndex].collect = isCollect;
         store.dispatch(CollectArticleAction());

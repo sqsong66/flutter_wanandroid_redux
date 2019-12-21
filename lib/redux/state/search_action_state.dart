@@ -9,7 +9,7 @@ class SearchActionState {
   SearchActionState({@required this.hotKeyList, @required this.historyList});
 
   factory SearchActionState.initial() {
-    return SearchActionState(hotKeyList: null, historyList: null);
+    return SearchActionState(hotKeyList: [], historyList: []);
   }
 
   SearchActionState copyWith(

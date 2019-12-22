@@ -18,15 +18,15 @@ class SettingContent extends StatelessWidget {
           SizedBox(height: 65.0),
           SettingItemWidget(
               icon: FontAwesomeIcons.bookmark, title: "Collections"),
-          SizedBox(height: 1.0),
+          Container(height: 1.0, color: Colors.white12, margin: EdgeInsets.only(left: 16)),
           SettingItemWidget(
               icon: FontAwesomeIcons.compass, title: "Navigation"),
-          SizedBox(height: 1.0),
+          Container(height: 1.0, color: Colors.white12, margin: EdgeInsets.only(left: 16)),
           SettingItemWidget(
               icon: FontAwesomeIcons.weixin, title: "Public Account"),
-          SizedBox(height: 1.0),
+          Container(height: 1.0, color: Colors.white12, margin: EdgeInsets.only(left: 16)),
           SettingItemWidget(icon: FontAwesomeIcons.gift, title: "Welfare"),
-          SizedBox(height: 1.0),
+          Container(height: 1.0, color: Colors.white12, margin: EdgeInsets.only(left: 16)),
           SettingItemWidget(
             icon: FontAwesomeIcons.signOutAlt,
             title: "Login Out",
@@ -36,6 +36,7 @@ class SettingContent extends StatelessWidget {
                   builder: (BuildContext context) => LoginScreen()));
             },
           ),
+          Container(height: 1.0, color: Colors.white12, margin: EdgeInsets.only(left: 16)),
         ],
       ),
     );

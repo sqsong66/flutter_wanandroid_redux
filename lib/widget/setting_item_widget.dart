@@ -14,8 +14,8 @@ class SettingItemWidget extends StatelessWidget {
           onClick();
         },
         child: Container(
-          color: Colors.black12,
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+          // color: Colors.black12,
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
           child: Row(
             children: <Widget>[
               Icon(icon, size: 20.0, color: Colors.white70),

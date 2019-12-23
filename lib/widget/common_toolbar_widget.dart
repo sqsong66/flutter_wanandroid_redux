@@ -19,7 +19,7 @@ class CommonToolbarWidget extends StatelessWidget {
         children: <Widget>[
           SizedBox(width: 16),
           CircleRippleWidget(
-            icon: Icon(Icons.arrow_back, size: 24.0),
+            icon: Icon(Icons.arrow_back, size: 20.0),
             onClick: () {
               Navigator.of(context).pop();
             },
@@ -27,7 +27,7 @@ class CommonToolbarWidget extends StatelessWidget {
           SizedBox(width: 16),
           Text(title,
               style: TextStyle(
-                fontSize: 22.0,
+                fontSize: 20.0,
                 color: Colors.white,
                 decoration: TextDecoration.none,
               ))

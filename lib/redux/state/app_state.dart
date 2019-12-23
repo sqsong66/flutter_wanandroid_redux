@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_wanandroid_redux/redux/state/home_state.dart';
 import 'package:flutter_wanandroid_redux/redux/state/login_state.dart';
+import 'package:flutter_wanandroid_redux/redux/state/navigation_state.dart';
 import 'package:flutter_wanandroid_redux/redux/state/project_state.dart';
 import 'package:flutter_wanandroid_redux/redux/state/search_action_state.dart';
 import 'package:flutter_wanandroid_redux/redux/state/search_result_state.dart';
@@ -14,6 +16,7 @@ class AppState {
   final SearchActionState searchActionState;
   final SearchResultSate searchResultSate;
   final WelfareState welfareState;
+  final NavigationState navigationState;
 
   AppState(
       {this.loginState,
@@ -21,7 +24,8 @@ class AppState {
       this.projectState,
       this.searchActionState,
       this.searchResultSate,
-      this.welfareState});
+      this.welfareState,
+      this.navigationState});
 
   factory AppState.initial() {
     return AppState(
@@ -30,6 +34,7 @@ class AppState {
         projectState: ProjectState.initial(),
         searchActionState: SearchActionState.initial(),
         searchResultSate: SearchResultSate.initial(),
-        welfareState: WelfareState.initial());
+        welfareState: WelfareState.initial(),
+        navigationState: NavigationState.initial());
   }
 }

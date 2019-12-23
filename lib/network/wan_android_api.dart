@@ -9,6 +9,7 @@ import 'package:flutter_wanandroid_redux/data/base_data.dart';
 import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 import 'package:flutter_wanandroid_redux/data/hot_search_key_bean.dart';
 import 'package:flutter_wanandroid_redux/data/login_result.dart';
+import 'package:flutter_wanandroid_redux/data/navigation_bean.dart';
 import 'package:flutter_wanandroid_redux/data/project_classify_bean.dart';
 import 'package:flutter_wanandroid_redux/data/welfare_bean.dart';
 import 'package:flutter_wanandroid_redux/main.dart';
@@ -131,5 +132,10 @@ class WanAndroidApi {
     Response response = await _dio.get(url,
         options: RequestOptions(baseUrl: "http://gank.io/api"));
     return WelfareBean.fromJson(response.data);
+  }
+
+  Future<NavigationBean> requestNavigationData() async {
+    Response response = await _dio.get(navigationUrl);
+    return NavigationBean.fromJson(response.data);
   }
 }

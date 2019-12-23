@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/network/wan_android_api.dart';
 import 'package:flutter_wanandroid_redux/ui/login_screen.dart';
+import 'package:flutter_wanandroid_redux/ui/navigation_screen.dart';
 import 'package:flutter_wanandroid_redux/ui/welfare_screen.dart';
 import 'package:flutter_wanandroid_redux/widget/setting_item_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,7 +25,10 @@ class SettingContent extends StatelessWidget {
               color: Colors.white12,
               margin: EdgeInsets.only(left: 16)),
           SettingItemWidget(
-              icon: FontAwesomeIcons.compass, title: "Navigation"),
+              icon: FontAwesomeIcons.compass,
+              title: "Navigation",
+              onClick: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => NavigationScreen()))),
           Container(
               height: 1.0,
               color: Colors.white12,

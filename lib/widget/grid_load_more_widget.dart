@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/common/item_builder.dart';
 
-class LoadMorehWidget<T> extends StatefulWidget {
+class GridLoadMoreWidget<T> extends StatefulWidget {
   final bool isLoading;
   final bool hasMoreData;
   final List<T> dataList;
   final Widget headerWidget;
   final VoidCallback onLoadMore;
+  final RefreshCallback refreshData;
   final ItemBuilder buildItem;
+  final int crossAxisCount;
+  final double gridGap;
 
-  LoadMorehWidget(
+  GridLoadMoreWidget(
       {@required this.isLoading,
       @required this.hasMoreData,
       @required this.headerWidget,
       @required this.dataList,
+      @required this.refreshData,
       @required this.onLoadMore,
-      @required this.buildItem});
+      @required this.buildItem,
+      @required this.crossAxisCount,
+      @required this.gridGap});
 
   @override
-  _LoadMorehWidgetState createState() => _LoadMorehWidgetState();
+  _GridLoadMoreWidgetState createState() => _GridLoadMoreWidgetState();
 }
 
-class _LoadMorehWidgetState extends State<LoadMorehWidget> {
+class _GridLoadMoreWidgetState extends State<GridLoadMoreWidget> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
   ScrollController _scrollController;
 
   @override
@@ -29,7 +37,7 @@ class _LoadMorehWidgetState extends State<LoadMorehWidget> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
+      if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent) {
         _getMoreData();
       }
@@ -76,23 +84,32 @@ class _LoadMorehWidgetState extends State<LoadMorehWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        controller: _scrollController,
-        itemCount: widget.dataList == null ? 0 : widget.dataList.length + 2,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
-            return widget.headerWidget == null
-                ? Container()
-                : widget.headerWidget;
-          } else if (index == widget.dataList.length + 1) {
-            return _loadingItemWidget();
-          } else {
-            return widget.buildItem(
-                context, widget.dataList[index - 1], index - 1);
-          }
-        },
+    return RefreshIndicator(
+      child: Padding(
+        padding: EdgeInsets.all(widget.gridGap),
+        child: CustomScrollView(
+          key: _refreshIndicatorKey,
+          controller: _scrollController,
+          slivers: <Widget>[
+            SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) =>
+                    widget.buildItem(context, widget.dataList[index], index),
+                childCount: widget.dataList.length,
+              ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: widget.crossAxisCount,
+                  crossAxisSpacing: widget.gridGap,
+                  mainAxisSpacing: widget.gridGap,
+                  childAspectRatio: 4 / 5),
+            ),
+            SliverToBoxAdapter(
+              child: _loadingItemWidget(),
+            )
+          ],
+        ),
       ),
+      onRefresh: widget.refreshData,
     );
   }
 }

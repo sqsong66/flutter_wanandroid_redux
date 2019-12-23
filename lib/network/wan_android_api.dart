@@ -10,6 +10,7 @@ import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 import 'package:flutter_wanandroid_redux/data/hot_search_key_bean.dart';
 import 'package:flutter_wanandroid_redux/data/login_result.dart';
 import 'package:flutter_wanandroid_redux/data/project_classify_bean.dart';
+import 'package:flutter_wanandroid_redux/data/welfare_bean.dart';
 import 'package:flutter_wanandroid_redux/main.dart';
 import 'package:flutter_wanandroid_redux/network/url_constants.dart';
 import 'package:path_provider/path_provider.dart';
@@ -61,6 +62,11 @@ class WanAndroidApi {
     Uri uri = Uri.https(
         "www.wanandroid.com", "https://www.wanandroid.com/user/login");
     return _cookieJar.loadForRequest(uri);
+  }
+
+  bool isLogin() {
+    var cookies = loadCookies();
+    return cookies.length > 1;
   }
 
   Future<LoginResult> login(String account, String password) async {
@@ -118,5 +124,12 @@ class WanAndroidApi {
     String url = "/article/query/$page/json";
     Response response = await _dio.post(url, data: {"k": keyWord});
     return HomeArticleBean.fromJson(response.data);
+  }
+
+  Future<WelfareBean> requestWelfareData(int page) async {
+    String url = "/data/福利/20/$page";
+    Response response = await _dio.get(url,
+        options: RequestOptions(baseUrl: "http://gank.io/api"));
+    return WelfareBean.fromJson(response.data);
   }
 }

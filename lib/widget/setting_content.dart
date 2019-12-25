@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid_redux/network/wan_android_api.dart';
+import 'package:flutter_wanandroid_redux/ui/collection_screen.dart';
 import 'package:flutter_wanandroid_redux/ui/login_screen.dart';
 import 'package:flutter_wanandroid_redux/ui/navigation_screen.dart';
+import 'package:flutter_wanandroid_redux/ui/public_account_screen.dart';
 import 'package:flutter_wanandroid_redux/ui/welfare_screen.dart';
 import 'package:flutter_wanandroid_redux/widget/setting_item_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,7 +21,10 @@ class SettingContent extends StatelessWidget {
         children: <Widget>[
           SizedBox(height: 65.0),
           SettingItemWidget(
-              icon: FontAwesomeIcons.bookmark, title: "Collections"),
+            icon: FontAwesomeIcons.bookmark,
+            title: "Collections",
+            onClick: () => _navigateToScreen(context, CollectionScreen()),
+          ),
           Container(
               height: 1.0,
               color: Colors.white12,
@@ -27,14 +32,16 @@ class SettingContent extends StatelessWidget {
           SettingItemWidget(
               icon: FontAwesomeIcons.compass,
               title: "Navigation",
-              onClick: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => NavigationScreen()))),
+              onClick: () => _navigateToScreen(context, NavigationScreen())),
           Container(
               height: 1.0,
               color: Colors.white12,
               margin: EdgeInsets.only(left: 16)),
           SettingItemWidget(
-              icon: FontAwesomeIcons.weixin, title: "Public Account"),
+            icon: FontAwesomeIcons.weixin,
+            title: "Public Account",
+            onClick: () => _navigateToScreen(context, PublicAccountScreen()),
+          ),
           Container(
               height: 1.0,
               color: Colors.white12,
@@ -42,8 +49,7 @@ class SettingContent extends StatelessWidget {
           SettingItemWidget(
             icon: FontAwesomeIcons.gift,
             title: "Welfare",
-            onClick: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => WelfareScreen())),
+            onClick: () => _navigateToScreen(context, WelfareScreen()),
           ),
           Container(
               height: 1.0,
@@ -67,6 +73,11 @@ class SettingContent extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _navigateToScreen(BuildContext context, Widget screen) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) => screen));
   }
 
   void _showConfimLoginOutDialog(BuildContext context) {

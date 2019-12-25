@@ -4,6 +4,7 @@ import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter_wanandroid_redux/data/account_title_bean.dart';
 import 'package:flutter_wanandroid_redux/data/banner_data.dart';
 import 'package:flutter_wanandroid_redux/data/base_data.dart';
 import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
@@ -137,5 +138,16 @@ class WanAndroidApi {
   Future<NavigationBean> requestNavigationData() async {
     Response response = await _dio.get(navigationUrl);
     return NavigationBean.fromJson(response.data);
+  }
+
+  Future<AccountTitleBean> requestAccountTitle() async {
+    Response response = await _dio.get(accountTitleUrl);
+    return AccountTitleBean.fromJson(response.data);
+  }
+
+  Future<HomeArticleBean> requestAccountList(int id, int page) async {
+    String url = "/wxarticle/list/$id/$page/json";
+    Response response = await _dio.get(url);
+    return HomeArticleBean.fromJson(response.data);
   }
 }

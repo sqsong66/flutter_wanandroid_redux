@@ -9,3 +9,5 @@ const String projectClassifyUrl = "/project/tree/json";
 const String hotSearchUrl = "/hotkey/json";
 
 const String navigationUrl = "/navi/json";
+
+const String accountTitleUrl = "/wxarticle/chapters/json";

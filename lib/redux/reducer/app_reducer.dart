@@ -2,6 +2,7 @@ import 'package:flutter_wanandroid_redux/redux/reducer/home_reducer.dart';
 import 'package:flutter_wanandroid_redux/redux/reducer/login_reducer.dart';
 import 'package:flutter_wanandroid_redux/redux/reducer/navigation_reducer.dart';
 import 'package:flutter_wanandroid_redux/redux/reducer/project_reducer.dart';
+import 'package:flutter_wanandroid_redux/redux/reducer/public_account_reducer.dart';
 import 'package:flutter_wanandroid_redux/redux/reducer/search_action_reducer.dart';
 import 'package:flutter_wanandroid_redux/redux/reducer/search_result_reducer.dart';
 import 'package:flutter_wanandroid_redux/redux/reducer/welfare_reducer.dart';
@@ -16,5 +17,7 @@ AppState appReducer(AppState appState, dynamic action) {
           searchActionReducer(appState.searchActionState, action),
       searchResultSate: searchResultReducer(appState.searchResultSate, action),
       welfareState: welfareReducer(appState.welfareState, action),
-      navigationState: navigationReducer(appState.navigationState, action));
+      navigationState: navigationReducer(appState.navigationState, action),
+      publicAccountState:
+          publicAccountReducer(appState.publicAccountState, action));
 }

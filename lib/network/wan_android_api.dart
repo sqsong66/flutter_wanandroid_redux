@@ -80,6 +80,14 @@ class WanAndroidApi {
     return result;
   }
 
+  Future<LoginResult> register(String account, String password, String confirmPassowrd) async {
+    Response response = await _dio
+        .post(registerUrl, data: {"username": account, "password": password, "repassword": confirmPassowrd});
+    print("Request result: ${response.data.toString()}");
+    LoginResult result = LoginResult.fromJson(response.data);
+    return result;
+  }
+
   Future<List<BannerData>> getBannerList() async {
     Response response = await _dio.get(bannerUrl);
     BannerBean bean = BannerBean.fromJson(response.data);
@@ -147,6 +155,12 @@ class WanAndroidApi {
 
   Future<HomeArticleBean> requestAccountList(int id, int page) async {
     String url = "/wxarticle/list/$id/$page/json";
+    Response response = await _dio.get(url);
+    return HomeArticleBean.fromJson(response.data);
+  }
+
+  Future<HomeArticleBean> requestCollections(int page) async {
+    String url = "/lg/collect/list/$page/json";
     Response response = await _dio.get(url);
     return HomeArticleBean.fromJson(response.data);
   }

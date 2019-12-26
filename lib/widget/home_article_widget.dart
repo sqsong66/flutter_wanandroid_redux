@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_wanandroid_redux/data/home_article_bean.dart';
 import 'package:flutter_wanandroid_redux/utils/common_utils.dart';
 import 'package:flutter_wanandroid_redux/widget/circle_ripple_widget.dart';
@@ -107,12 +108,17 @@ class HomeArticleWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            article.title.trim(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                wordSpacing: 1.0),
+                          // Text(
+                          //   article.title.trim(),
+                          //   style: TextStyle(
+                          //       color: Colors.white,
+                          //       fontSize: 18.0,
+                          //       wordSpacing: 1.0),
+                          // ),
+                          Html(
+                            data: article.title.trim(),
+                            defaultTextStyle:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
                           ),
                           SizedBox(height: 5.0),
                           Row(
@@ -147,7 +153,8 @@ class HomeArticleWidget extends StatelessWidget {
                                   CircleRippleWidget(
                                     icon: article.collect
                                         ? Icon(Icons.favorite,
-                                            color: Colors.redAccent, // Theme.of(context).accentColor
+                                            color: Colors
+                                                .redAccent, // Theme.of(context).accentColor
                                             size: 24.0)
                                         : Icon(Icons.favorite_border,
                                             size: 24.0),

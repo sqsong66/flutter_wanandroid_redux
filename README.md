@@ -2,6 +2,8 @@
 ## 项目概述
 本项的数据使用的是鸿洋大神的[玩Android开放API](http://wanandroid.com/blog/show/2)。项目整体使用的是Flutter编写，采用的是[Redux](https://pub.dev/packages/flutter_redux)架构。整体界面使用的[Google Material Design](https://material.io/design/)设计风格。该项目也是自己业余时间学习所写，肯定会有各种不足，如果大家好的意见或建议，欢迎大家提[issue](https://github.com/songmao123/flutter_wanandroid_redux/issues)或[Pull requests](https://github.com/songmao123/flutter_wanandroid_redux/pulls)。
 
+本项目跟之前的[Kotlin版本玩安卓](https://github.com/songmao123/WanAndroid)客户端界面基本一致。
+
 ## 项目所使用到的开源库
 1. [flutter_redux](https://pub.dev/packages/flutter_redux)
 2. [dio](https://pub.dev/packages/dio)
@@ -22,4 +24,4 @@
 <img src="screenshot/image01.png" width="270" height="480" />  <img src="screenshot/image02.png" width="270" height="480" />  <img src="screenshot/image03.png" width="270" height="480" /><br>
 <img src="screenshot/image04.png" width="270" height="480" />  <img src="screenshot/image05.png" width="270" height="480" />  <img src="screenshot/image06.png" width="270" height="480" /><br>
 <img src="screenshot/image07.png" width="270" height="480" />  <img src="screenshot/image08.png" width="270" height="480" />  <img src="screenshot/image09.png" width="270" height="480" /><br>
-<img src="screenshot/image10.png" width="270" height="480" />
+<img src="screenshot/image10.png" width="270" height="480" /><img src="screenshot/image11.png" width="270" height="480" />  <img src="screenshot/image12.png" width="270" height="480" /><br>

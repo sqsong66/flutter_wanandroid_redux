@@ -143,7 +143,7 @@ class SliverSettingBar extends SliverPersistentHeaderDelegate {
 
   String _getUserName() {
     String userName = WanAndroidApi.getInstance().getLoginUserName();
-    if (userName.isNotEmpty) {
+    if (userName != null && userName.isNotEmpty) {
       return userName;
     }
     return "Tourists";

@@ -8,7 +8,7 @@ import 'package:redux_thunk/redux_thunk.dart';
 ThunkAction<AppState> startRegister(
     String account, String password, String confirmPassword) {
   return (Store<AppState> store) async {
-    store.dispatch(UpdateLoadingAction(isLoading: true));
+    store.dispatch(UpdateRegisterLoadingAction(isLoading: true));
     LoginResult result = await WanAndroidApi.getInstance()
         .register(account, password, confirmPassword);
     store.dispatch(UpdateRegisterAction(registerStatus: 1, errorMessage: ""));
@@ -20,9 +20,9 @@ ThunkAction<AppState> startRegister(
   };
 }
 
-class UpdateLoadingAction {
+class UpdateRegisterLoadingAction {
   final bool isLoading;
-  UpdateLoadingAction({@required this.isLoading});
+  UpdateRegisterLoadingAction({@required this.isLoading});
 }
 
 class UpdateRegisterAction {

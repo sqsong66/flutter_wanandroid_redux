@@ -32,9 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Stack(
           children: <Widget>[
-            BlurImageWidget(
-              assetImageUrl: imageList[_imageIndex],
-            ),
+            BlurImageWidget(assetImageUrl: imageList[_imageIndex]),
             Positioned(
               left: 30.0,
               top: 55.0,
@@ -44,6 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             Center(
                 child: StoreConnector<AppState, RegisterViewModel>(
+              distinct: false,
               converter: (Store store) => RegisterViewModel.fromStore(store),
               builder: (BuildContext context, RegisterViewModel viewModel) {
                 return RegisterWidget(
@@ -53,6 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
               },
               onDidChange: (viewModel) {
+                if (viewModel.type != 1) return;
                 if (viewModel.isLoading) {
                   showLoadingDialog(context, "Registering...");
                   _isDialogShowing = true;

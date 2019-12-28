@@ -48,12 +48,12 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Center(
                 child: StoreConnector<AppState, LoginViewModel>(
-              distinct: true,
+              distinct: false,
               converter: (store) => LoginViewModel.fromStore(store),
               builder: (context, viewModel) => LoginWidget(viewModel),
               onDidChange: (viewModel) {
-                print(
-                    "onDidChange -----------------> ${viewModel.loginStatus}");
+                if (viewModel.type != 0) return;
+                print("onDidChange --------> ${viewModel.loginStatus}");
                 if (viewModel.loginStatus == 0) {
                   showLoadingDialog(context, "Logining...");
                   _isDialogShowing = true;
@@ -70,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (_isDialogShowing) {
                     Navigator.of(context).pop();
                   }
+                  _isLoginSuccess = false;
                   // Login error.
                   Fluttertoast.showToast(msg: viewModel.errorMessage);
                 }

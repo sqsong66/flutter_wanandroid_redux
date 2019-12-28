@@ -3,12 +3,12 @@ import 'package:flutter_wanandroid_redux/redux/state/register_state.dart';
 import 'package:redux/redux.dart';
 
 final registerReducer = combineReducers<RegisterState>([
-  TypedReducer<RegisterState, UpdateLoadingAction>(_updateLoadingState),
+  TypedReducer<RegisterState, UpdateRegisterLoadingAction>(_updateLoadingState),
   TypedReducer<RegisterState, UpdateRegisterAction>(_updateRegister),
 ]);
 
 RegisterState _updateLoadingState(
-    RegisterState state, UpdateLoadingAction action) {
+    RegisterState state, UpdateRegisterLoadingAction action) {
   return state.copyWith(
       action.isLoading, state.registerStatus, state.errorMessage);
 }
